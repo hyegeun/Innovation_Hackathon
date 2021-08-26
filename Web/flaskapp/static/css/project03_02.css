@@ -1,0 +1,102 @@
+/* head영역 */
+.header{
+    left: 210px;
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    padding: .5rem 1rem;
+    margin-right: -600px;
+    margin-top: 80px;
+}
+.about_btn{
+    width: 80%;
+    max-width: 100px;
+    height: 30px;
+    border-radius: 10px;
+    color: black;
+    font-size: 20px;
+    font-weight: bold;
+    background-color:rgba(255, 255, 255, 0.466);
+    font-family: 'Do Hyeon', cursive;
+}
+
+
+/* body영역 */
+body {
+    background-image: url(../images/home_img/b.png);
+    background-repeat:no-repeat;
+    background-size: cover;
+    background-color:white;
+}
+
+h2 {
+    font-size: 40px;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 110px;
+    font-family: 'DO Hyeon', cursive;
+    /* margin-top: 75px; */
+    /* font-family: Jua; */
+}
+
+.middle {
+max-width: 600px;
+margin-left: auto;
+margin-right: auto;
+text-align: center; /* 가운데 정렬 추가*/
+}
+
+.middle a {
+    text-decoration: none;
+}
+
+.middle h2 {
+    text-align: left;
+} 
+
+
+.ok {
+    font-family: 'Do Hyeon', cursive;
+    display: block;
+    width: 80%;
+    max-width: 300px;
+    height: 70px;
+    border-radius: 20px;
+    text-align: center;
+    color: #ffffff;
+    font-size: 40px;
+    font-weight: bold;
+    background-color: #000000;
+    margin: 10px auto 10px;
+}
+
+/* page3 preview-image css */
+.preview-img {
+    margin-bottom : 10px;
+}
+.preview-img img { /* max-width, max-height로 해놓으면 이미지 비율 유지됨*/
+    max-width: 500px; 
+    max-height: 500px; 
+}
+
+.btn { /* file upload 의 label 태그 css*/
+    margin: auto;
+    color : white;
+    background-color: purple;
+    text-align: center;
+    padding: 10px 12px 13px 14px;/* 위 오른쪽 아래 왼쪽 순으로 설정, 다 같은거면 한번만 쓰면됨*/
+    border-radius: 4px; 
+    cursor: pointer;
+    margin-bottom: 70px;
+}
+.btn.none { /* file upload의 input 태그 숨기기*/
+    display : none;
+}
+.btn.submit { /* 배경이미지 설정 button 태그 css*/
+    font-family: inherit; /* 손대지마셈 */
+    border : none; /*손대지마셈*/
+    display: inline-block;
+    padding : 13.5px;
+}
