@@ -60,12 +60,11 @@ for i, name in enumerate(fpath):
         prewidth = personwidth
     else:
         posw = int(prewidth * faceinfo[i-1][0] - (prewidth * faceinfo[i-1][2]/2))   #지금 사람 이전 사람사진의 face left 크기
-        statew = int(personwidth - (personwidth * faceinfo[i][0] + (personwidth * faceinfo[i][2]/2)) - 10) #지금 사람의 face right 너비 크기
         wleft = width - personwidth
         #width가 음수가 되어서는 안됨. 에러남 
         if wleft < 0:
             wleft = 0
-        wright = width - personwidth + posw + statew       
+        wright = wleft + posw     
         width = random.randrange(wleft, wright)   #범위는 width - w 부터 width - w + posw + statew 까지
         prewidth = personwidth
     #임시 width 리스트에 추가
