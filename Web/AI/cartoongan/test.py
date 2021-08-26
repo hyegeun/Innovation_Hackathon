@@ -7,7 +7,6 @@ import torchvision.transforms as transforms
 from torch.autograd import Variable
 import torchvision.utils as vutils
 from network.Transformer import Transformer
-
 parser = argparse.ArgumentParser()
 parser.add_argument('--input_dir', default = 'AI/cartoongan/test_img')
 parser.add_argument('--load_size', default = 800)
@@ -15,26 +14,21 @@ parser.add_argument('--model_path', default = 'AI/cartoongan/pretrained_model/')
 parser.add_argument('--style', default = 'Hayao')
 parser.add_argument('--output_dir', default = 'flaskapp/static/images/output_img')
 parser.add_argument('--gpu', type=int, default = 0)
-
 opt = parser.parse_args()
-
 valid_ext = ['.jpg', '.png']
-
 if not os.path.exists(opt.output_dir): os.mkdir(opt.output_dir)
-
 # load pretrained model
 model = Transformer()
 model.load_state_dict(torch.load(os.path.join(opt.model_path + opt.style + '_net_G_float.pth')))
 model.eval()
-
 if opt.gpu > -1:
-	print('GPU mode')
-	model.cuda()
+    print('GPU mode')
+    model.cuda()
 else:
-	print('CPU mode')
-	model.float()
-
+    print('CPU mode')
+    model.float()
 for files in os.listdir(opt.input_dir):
+<<<<<<< HEAD
 	ext = os.path.splitext(files)[1]
 	if ext not in valid_ext:
 		continue
@@ -70,7 +64,7 @@ for files in os.listdir(opt.input_dir):
 	output_image = output_image.data.cpu().float() * 0.5 + 0.5
 	# save
 	tf = os.path.isdir('flaskapp/static/images/output_img')
-	if tf != True:
+	if tf == False:
 		os.makedirs('flaskapp/static/images/output_img')
 	vutils.save_image(output_image, 'flaskapp/static/images/output_img/output_result.png')
 	# remove
@@ -78,9 +72,7 @@ for files in os.listdir(opt.input_dir):
 
 removepath = 'flaskapp/static/images/input_img'
 removelist = os.listdir(removepath)
-
 #input했던 이미지 삭제
 for img in removelist:
-	os.remove('flaskapp/static/images/input_img/%s' %img)
-
+    os.remove('flaskapp/static/images/input_img/%s' %img)
 print('Done!')
