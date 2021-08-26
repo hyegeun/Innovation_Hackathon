@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+
+<html lang="ko">
+    <head>
+        <meta charset="uft-8">
+        <title>ZOOMEET-CHU</title>
+        <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+        <style>
+            /* 글씨체 import하기 */
+            @import url('https://fonts.googleapis.com/css2?family=Gugi&display=swap');
+            @import url('https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap');
+        </style>
+        <link rel="stylesheet" href="../static/css/project03_02.css">
+        <!-- 상단 about botton과 main page 이동 -->
+        <div class="header">
+            <div class="main_location">
+                <a onclick="location.href='/'">
+                    <img src="../static/images/home_img/title2.png" alt="메인화면으로 이동" width="200">
+                </a>
+            </div>
+            <!-- <button type="button" class="about_btn" onclick="location.href='/about'">ABOUT</button> -->
+        </div>
+    </head>
+
+    <body>
+        <div class="middle">
+            <h2 id=input>&nbsp;&nbsp;(1) 이미지를 넣어주세요.</h2>
+            
+                <div class="preview-img">
+                    <!-- 이미지는 알아서 바꾸세요  -->
+                    <img src="../static/images/home_img/choice.png" id="preview-image">
+                </div>
+    
+                <div class="btn-wrap">
+                    <form action="" method="POST" enctype="multipart/form-data">
+
+                        <form action="http://localhost:5000/fileUpload" method="POST" enctype="multipart/form-data">
+                    
+                            <label class="btn" for="img-upload-btn" input type="file" name="file">이미지 선택</label>
+                            <input type="file" name="file" style="display: none;" class="btn none" id="img-upload-btn">    
+                            <!-- 버튼 누르면 form 태그 실행 -->
+                            <button class="btn submit" type="submit">설정</button> 
+                            <input type="submit" button type="button" class="ok" onclick="location.href='/project04_04'" value="NEXT"> </button>
+                        </div>
+                        </form>
+    
+            
+            </a>
+        </div>
+    </body>
+    <script>
+        // 절대 손대지마세요
+        function imagePreview(input) {
+            if(input.files && input.files[0]) {// 이미지 파일인지 검사
+                // FileReader 인스턴스 생성
+                const reader = new FileReader()
+                // 이미지가 로드가 된 경우
+                reader.onload = e => {
+                    const previewImage = document.getElementById("preview-image")
+                    previewImage.src = e.target.result
+                    //previewImage의 src속성의 결과를
+                }
+                // reader가 이미지 읽도록 하기
+                reader.readAsDataURL(input.files[0])
+            }
+        }
+        // upload file에 change부여
+        const uploadImage = document.getElementById("img-upload-btn")
+        uploadImage.addEventListener("change", e => {
+            imagePreview(e.target)
+        })
+    </script> 
+</html>

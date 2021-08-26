@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+
+<html lang="ko">
+    <head>
+        <meta charset="uft-8">
+        <title>ZOOMEET-CHU</title>
+        <style>
+            /* 글씨체 import하기 */
+            @import url('https://fonts.googleapis.com/css2?family=Gugi&display=swap');
+            @import url('https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap');
+        </style>
+        <link rel="stylesheet" href="../static/css/project02.css">
+        <!-- 상단 about botton과 main page 이동 -->
+        <div class="header">
+            <div class="main_location">
+                <a onclick="location.href='/'">
+                    <img src="../static/images/home_img/title2.png" alt="메인화면으로 이동" width="200">
+                </a>
+            </div>
+            <!-- <button type="button" class="about_btn" onclick="location.href='about.html'">ABOUT</button> -->
+        </div>
+    </head>
+
+    <body>
+        <h2 class="where_text">어디로 갈까?</h2>
+        <!-- 위 두 개의 이미지 -->
+        <div class="container1">
+            <!-- 놀이동산 -->
+            <div class="where">
+                <div class="img_gradient">
+                    <a onclick="location.href='/project03_01'">
+                        <img src="../static/images/home_img/place1.png" alt="놀이동산">
+                    </a>
+                    <div class="text">
+                        <h1>&nbsp;&nbsp;&nbsp;놀이동산</h1>
+                    </div>
+                </div>
+            </div>
+            <!-- 바다 -->
+            <div class="where">
+                <div class="img_gradient">
+                    <a onclick="location.href='/project03_02'">
+                        <img src="../static/images/home_img/place2.png" alt="바다">
+                    </a>
+                    <div class="text">
+                        <h1>&nbsp;&nbsp;&nbsp;바다</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 아래 두 개의 이미지 -->
+        <div class="container2">
+            <!-- 벚꽃놀이 -->
+            <div class="where">
+                <div class="img_gradient">
+                    <a onclick="location.href='/project03_03'">
+                        <img src="../static/images/home_img/place3.png" alt="벚꽃놀이">
+                    </a>
+                    <div class="text">
+                        <h1>&nbsp;&nbsp;&nbsp;벚꽃놀이</h1>
+                    </div>
+                </div>
+            </div>
+            <!-- 술 한 잔 -->
+            <div class="where">
+                <div class="img_gradient">
+                    <a onclick="location.href='/project03_04'">
+                        <img src="../static/images/home_img/place4.png" alt="술 한 잔">
+                    </a>
+                    <div class="text">
+                        <h1 id=bar>&nbsp;&nbsp;술 한 잔</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

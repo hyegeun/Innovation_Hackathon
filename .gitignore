@@ -1,0 +1,4 @@
+#pycache
+Web/flaskapp/__pycache__/
+Web/AI/yolov5/utils/__pycache__/
+Web/AI/yolov5/models/__pycache__/

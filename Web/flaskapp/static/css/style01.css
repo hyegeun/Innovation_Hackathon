@@ -1,0 +1,254 @@
+body{
+    background-image: url(../images/back.png);
+    background-repeat:no-repeat;
+    background-size: cover;
+    background-color: thistle;
+}
+/* 1페이지 */
+.container{
+    /* 이미지 가운데에 위치시키기 */
+    text-align: center;
+}
+.title{
+    margin-top: -30px;
+}
+.title_h1{
+    font-family: 'Gugi', cursive;
+    margin-top: -40px;
+    font-size: 35px;
+}
+.start{
+    font-family: 'DO Hyeon', cursive;
+    display: block;
+    width: 80%;
+    max-width: 300px;
+    height: 70px;
+    border-radius: 20px;
+    text-align: center;
+    color: #ffffff;
+    font-size: 30px;
+    font-weight: bold;
+    background-color: #000000;
+    margin: 10px auto 10px;
+}
+.tut_text{
+    /* font-family: 'Gugi', cursive; */
+    font-size: 30px;
+    font-family: 'DO Hyeon', cursive;
+}
+
+
+/* 2페이지 */
+/* 이건 두 개의 아이콘이 위아래로 나옴 */
+/* .header{
+    text-align: center;
+    margin-top:auto;
+    position: relative;
+    left: 250px;
+    /* display: inline-block; */
+    /* width: 100%;
+    margin: 0 auto;
+} */
+/* 이건 두 아이콘이 좌우로 나옴 */
+.header{
+    left: 210px;
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    padding: .5rem 1rem;
+}
+.about_btn{
+    width: 80%;
+    max-width: 100px;
+    height: 30px;
+    border-radius: 10px;
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: bold;
+    background-color: #8c00ff;
+    font-family: 'Do Hyeon', cursive;
+}
+/* main화면의 about 버튼 */
+#main_about{
+    left: 350px
+}
+/* about화면의 main 버튼 - about 버튼은 삭제 */
+#about_main{
+    left: 400px;
+}
+.where_text{
+    font-size: 40px;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 100px;
+    font-family: 'Gugi', cursive;
+}
+.w_container{
+    text-align: center;
+    margin-top:20px;
+}
+.w_container2{
+    text-align: center;
+    margin-top:10px;
+}
+.where_img{
+    /* 이 position을 relative로 설정하면 이미지에 백그라운드로 그라데이션됨 
+    - background linear-~랑 연관있음 */
+    position: relative;
+    /* 좌우로 정렬하게 만들기 - 카드 이미지들 */
+    display: inline-block;
+    border-radius: 8px;
+    /* width: 280px; */
+    height: 231px;
+    /*if 좌우 정렬했는데 카드 한 개가 아래로 내려간다면 */
+    width: 100%;
+    max-width: 357px;
+    /* 밑에 있는 who:hover부분을 부드럽게 만들기 */
+    transition: 0.5s;
+}
+/* class : hover, transform~하면 마우스 가져다 대면 이미지가 약간 작아지는 액션 만들어짐 */
+.where_img:hover{
+    transform: scale(1.1);
+}
+.text{
+    position: absolute;
+    bottom: 0;
+    padding: 20px;
+    z-index: 2;
+    font-family: 'Gugi', cursive;
+}
+.text h1{
+    color: #fff;
+    text-shadow: -3px 0 black, 0 3px black, 3px 0 black, 0 -3px black;
+}
+#bar_h1{
+    margin: 30px;
+    margin-left: 10px;
+}
+.text p{
+    color: white;
+    /* 행간조절 */
+    line-height: 1.5;
+    margin: 0;
+    font-family: 'DO Hyeon', cursive;
+    font-size: 20px;
+}
+
+
+/* 3페이지_02 - 바다 적용 영상 */
+/* 이 부분은 술집, 바다 동시적용 */
+.input{
+    /* 이미지 가운데에 위치시키기 */
+    text-align: center;
+}
+/* 이 부분은 술집, 바다 동시적용 */
+.input_text{
+    font-family: 'Gugi', cursive;
+    text-align: center;
+    margin-top: -90px;
+    font-size: 30px;
+    font-weight: bold;
+}
+.dif_input_text{
+
+    font-family: 'Gugi', cursive;
+    text-align: center;
+    margin-top: 100px;
+    font-size: 40px;
+    font-weight: bold;
+    background: white;
+    padding: auto;
+    box-sizing: border-box;
+    color: skyblue;
+
+}
+/* 이 부분은 술집, 바다 동시적용 */
+/* 4-2의 언어부분에서 사용 (2) 원하는 카툰형식 선택*/
+.img_input{
+    margin-top:80px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 50px;
+    font-family: 'DO Hyeon', cursive
+}
+.img_input_h2{
+    font-family: 'DO Hyeon', cursive
+}
+
+#bar{
+    color: white;
+}
+.h2{
+    font-family: 'DO Hyeon', cursive;
+}
+.input-file-button{
+    padding: 6px 25px;
+    background-color:#FF6600;
+    border-radius: 4px;
+    color: white;
+    cursor: pointer;
+    font-family: 'DO Hyeon', cursive;
+  }
+
+
+  /* 3페이지_04 - 술집 적용 영상 >>> 이 부분은 3페이지_02와 동일 - 단순 id설정 */
+
+
+  /* 4페이지_02 - 바다 적용 영상 */
+.g_container{
+    text-align: center;
+    margin-top:0px;
+}
+.ccontainer{
+    position: absolute;
+    transform: translate(-50%, -50%);
+    top:50%;
+    left: 50%;
+}
+input[type="radio"]{
+    display: none;
+    margin: 10px;
+}
+input[type="radio"] + label{
+    display: inline-block;
+    margin: -2px;
+    padding: 8px 19px;
+    background-color: red;
+    border: 1px solid blueviolet;
+    font-size: 13px !important;
+    width: 100px;
+    text-align: center;
+}
+
+input[type=radio]:radio+label{
+    background-image:none;
+    background-color:yellow;
+    color:cyan
+}
+.gan_img{
+    /* 이 position을 relative로 설정하면 이미지에 백그라운드로 그라데이션됨 
+    - background linear-~랑 연관있음 */
+    position: relative;
+    /* 좌우로 정렬하게 만들기 - 카드 이미지들 */
+    display: inline-block;
+    border-radius: 8px;
+    /* width: 280px; */
+    height: 159px;
+    /*if 좌우 정렬했는데 카드 한 개가 아래로 내려간다면 */
+    width: 100%;
+    max-width: 240px;
+    /* 밑에 있는 who:hover부분을 부드럽게 만들기 */
+    transition: 0.5s;
+}
+/* class : hover, transform~하면 마우스 가져다 대면 이미지가 약간 작아지는 액션 만들어짐 */
+.gan_img:hover{
+    transform: scale(1.1);
+}
+
+
+
+.input_about{
+    font-family: 'DO Hyeon', cursive
+}

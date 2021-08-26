@@ -1,0 +1,63 @@
+/* head영역 */
+.header{
+    left: 210px;
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    padding: .5rem 1rem;
+    margin-right: -600px;
+    margin-top: 80px;
+}
+/* .about_btn{
+    width: 80%;
+    max-width: 100px;
+    height: 30px;
+    border-radius: 10px;
+    color: black;
+    font-size: 20px;
+    font-weight: bold;
+    background-color:rgba(255, 255, 255, 0.466);
+    font-family: 'Do Hyeon', cursive;
+    margin-top: -5px;
+    margin-right: -100px;
+} */
+
+
+/* body영역 */
+body{
+    background-image: url(../images/home_img/back.png);
+    background-repeat:no-repeat;
+    background-size: cover;
+    background-color: white;
+}
+.output_img{
+    margin-top: 50px;
+    text-align: center;
+}
+
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+a{
+    margin-top: 30px;
+    display: block;
+    background: rgba(0, 0, 0, 0.651);
+    color: white;
+    padding: 15px;
+    cursor: pointer;
+    text-decoration: none;
+    width: 200px;
+    text-align: center;
+    border-radius: 5px;
+    font-size: 20px;
+}
