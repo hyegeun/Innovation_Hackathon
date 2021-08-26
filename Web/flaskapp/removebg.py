@@ -20,9 +20,9 @@ for name in fname:
         headers={'X-Api-Key': 'x57bwtfa5Bfhptq5U3FyMjUr'},
     )
     if response.status_code == requests.codes.ok:
-
-        if os.path.isdir('AI/imgconv/process') == False:
-            os.mkdir('AI/imgconv/process')
+        tf = os.path.isdir('AI/imgconv/process')
+        if tf == False:
+            os.makedirs('AI/imgconv/process')
         with open('AI/imgconv/process/%s.png' %name[:-4], 'wb') as out:
             out.write(response.content)
     else:
