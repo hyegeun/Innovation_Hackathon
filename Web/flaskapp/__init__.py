@@ -178,8 +178,21 @@ def main_1():
 @app.route('/about')
 def about():
     return render_template("about.html")
+
+@app.route('/loading_04', methods=['GET', 'POST'])
+def loading4():
+    if request.method == 'POST':
+        kind = request.form['style']
+        kind = str(kind)
+
+        #form1 = ('<input type="hidden" name="style" value="%s">' %kind)
+        #form2 = '<input type="image" value="시작하기" alt="버튼">'
+        #form = [form1, form2]
+        
+    return render_template("loading_04.html", value1 = kind)
+
 @app.route('/loading_02', methods=['GET', 'POST'])
-def loading():
+def loading2():
     if request.method == 'POST':
         kind = request.form['style']
         kind = str(kind)
