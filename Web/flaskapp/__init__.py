@@ -32,8 +32,8 @@ def project05_04():
     os.system(cmd3)
     return render_template("project05_04.html")
 
-@app.route('/project05_02', methods=['GET', 'POST'])
-def project05_02():
+@app.route('/project05_03', methods=['GET', 'POST'])
+def project05_03():
 
     
     if request.method=='POST':
@@ -63,7 +63,72 @@ def project05_02():
         
         
     
+    return render_template("project05_03.html")
+
+
+
+@app.route('/project05_02', methods=['GET', 'POST'])
+def project05_02():
+
+    
+    if request.method=='POST':
+        
+        kind1=request.form['style']
+        kind1=str(kind1)
+        cmd=("python ./AI/yolov5/detect.py --source ./flaskapp/static/images/input_img/ --classes 0 --nosave --save-crop")
+        os.system(cmd)
+
+        cmd1=("python AI/yolov5/detect.py --source AI/yolov5/result/exp --weight AI/yolov5/face_yolov5s.pt --save-txt --nosave")
+        os.system(cmd1)
+
+        cmd2=("python ./flaskapp/removebg.py")
+        os.system(cmd2)
+
+        cmd3=("python ./AI/imgconv/ocean.py")
+        os.system(cmd3)
+        
+        
+        if kind1=='Hosoda':
+            cmd4=("python ./AI/cartoongan/test.py --style Hosoda")
+        elif kind1=='Shinkai':
+            cmd4=("python ./AI/cartoongan/test.py --style Shinkai")
+        elif kind1=='Hayao':
+            cmd4=("python ./AI/cartoongan/test.py --style Hayao")
+        os.system(cmd4)
     return render_template("project05_02.html")
+
+@app.route('/project05_01', methods=['GET', 'POST'])
+def project05_01():
+
+    
+    if request.method=='POST':
+        
+        kind1=request.form['style']
+        kind1=str(kind1)
+        cmd=("python ./AI/yolov5/detect.py --source ./flaskapp/static/images/input_img/ --classes 0 --nosave --save-crop")
+        os.system(cmd)
+
+        cmd1=("python AI/yolov5/detect.py --source AI/yolov5/result/exp --weight AI/yolov5/face_yolov5s.pt --save-txt --nosave")
+        os.system(cmd1)
+
+        cmd2=("python ./flaskapp/removebg.py")
+        os.system(cmd2)
+
+        cmd3=("python ./AI/imgconv/ocean.py")
+        os.system(cmd3)
+        
+        
+        if kind1=='Hosoda':
+            cmd4=("python ./AI/cartoongan/test.py --style Hosoda")
+        elif kind1=='Shinkai':
+            cmd4=("python ./AI/cartoongan/test.py --style Shinkai")
+        elif kind1=='Hayao':
+            cmd4=("python ./AI/cartoongan/test.py --style Hayao")
+        os.system(cmd4)
+        
+        
+    
+    return render_template("project05_01.html")
 
 @app.route('/project04_04')
 def project04_04():

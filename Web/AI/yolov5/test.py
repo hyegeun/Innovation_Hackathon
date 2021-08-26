@@ -20,27 +20,27 @@ from utils.torch_utils import select_device, time_synchronized
 
 @torch.no_grad()
 def test(data,
-         weights=None,
-         batch_size=32,
-         imgsz=640,
-         conf_thres=0.001,
-         iou_thres=0.6,  # for NMS
-         save_json=False,
-         single_cls=False,
-         augment=False,
-         verbose=False,
-         model=None,
-         dataloader=None,
-         save_dir=Path(''),  # for saving images
-         save_txt=False,  # for auto-labelling
-         save_hybrid=False,  # for hybrid auto-labelling
-         save_conf=False,  # save auto-label confidences
-         plots=True,
-         wandb_logger=None,
-         compute_loss=None,
-         half_precision=True,
-         is_coco=False,
-         opt=None):
+    weights=None,
+    batch_size=32,
+    imgsz=640,
+    conf_thres=0.001,
+    iou_thres=0.6,  # for NMS
+    save_json=False,
+    single_cls=False,
+    augment=False,
+    verbose=False,
+    model=None,
+    dataloader=None,
+    save_dir=Path(''),  # for saving images
+    save_txt=False,  # for auto-labelling
+    save_hybrid=False,  # for hybrid auto-labelling
+    save_conf=False,  # save auto-label confidences
+    plots=True,
+    wandb_logger=None,
+    compute_loss=None,
+    half_precision=True,
+    is_coco=False,
+    opt=None):
     # Initialize/load model and set device
     training = model is not None
     if training:  # called by train.py
@@ -88,8 +88,7 @@ def test(data,
         if device.type != 'cpu':
             model(torch.zeros(1, 3, imgsz, imgsz).to(device).type_as(next(model.parameters())))  # run once
         task = opt.task if opt.task in ('train', 'val', 'test') else 'val'  # path to train/val/test images
-        dataloader = create_dataloader(data[task], imgsz, batch_size, gs, opt, pad=0.5, rect=True,
-                                       prefix=colorstr(f'{task}: '))[0]
+        dataloader = create_dataloader(data[task], imgsz, batch_size, gs, opt, pad=0.5, rect=True, prefix=colorstr(f'{task}: '))[0]
 
     seen = 0
     confusion_matrix = ConfusionMatrix(nc=nc)
@@ -154,9 +153,9 @@ def test(data,
             if len(wandb_images) < log_imgs and wandb_logger.current_epoch > 0:  # Check for test operation
                 if wandb_logger.current_epoch % wandb_logger.bbox_interval == 0:
                     box_data = [{"position": {"minX": xyxy[0], "minY": xyxy[1], "maxX": xyxy[2], "maxY": xyxy[3]},
-                                 "class_id": int(cls),
-                                 "box_caption": "%s %.3f" % (names[cls], conf),
-                                 "scores": {"class_score": conf},
+                                "class_id": int(cls),
+                                "box_caption": "%s %.3f" % (names[cls], conf),
+                                "scores": {"class_score": conf},
                                  "domain": "pixel"} for *xyxy, conf, cls in pred.tolist()]
                     boxes = {"predictions": {"box_data": box_data, "class_labels": names}}  # inference-space
                     wandb_images.append(wandb_logger.wandb.Image(img[si], boxes=boxes, caption=path.name))
@@ -170,9 +169,9 @@ def test(data,
                 box[:, :2] -= box[:, 2:] / 2  # xy center to top-left corner
                 for p, b in zip(pred.tolist(), box.tolist()):
                     jdict.append({'image_id': image_id,
-                                  'category_id': coco91class[int(p[5])] if is_coco else int(p[5]),
-                                  'bbox': [round(x, 3) for x in b],
-                                  'score': round(p[4], 5)})
+                                'category_id': coco91class[int(p[5])] if is_coco else int(p[5]),
+                                'bbox': [round(x, 3) for x in b],
+                                'score': round(p[4], 5)})
 
             # Assign all predictions as incorrect
             correct = torch.zeros(pred.shape[0], niou, dtype=torch.bool, device=device)
@@ -314,20 +313,20 @@ if __name__ == '__main__':
 
     if opt.task in ('train', 'val', 'test'):  # run normally
         test(opt.data,
-             opt.weights,
-             opt.batch_size,
-             opt.img_size,
-             opt.conf_thres,
-             opt.iou_thres,
-             opt.save_json,
-             opt.single_cls,
-             opt.augment,
-             opt.verbose,
-             save_txt=opt.save_txt | opt.save_hybrid,
-             save_hybrid=opt.save_hybrid,
-             save_conf=opt.save_conf,
-             opt=opt
-             )
+            opt.weights,
+            opt.batch_size,
+            opt.img_size,
+            opt.conf_thres,
+            opt.iou_thres,
+            opt.save_json,
+            opt.single_cls,
+            opt.augment,
+            opt.verbose,
+            save_txt=opt.save_txt | opt.save_hybrid,
+            save_hybrid=opt.save_hybrid,
+            save_conf=opt.save_conf,
+            opt=opt
+            )
 
     elif opt.task == 'speed':  # speed benchmarks
         for w in opt.weights:
@@ -342,7 +341,7 @@ if __name__ == '__main__':
             for i in x:  # img-size
                 print(f'\nRunning {f} point {i}...')
                 r, _, t = test(opt.data, w, opt.batch_size, i, opt.conf_thres, opt.iou_thres, opt.save_json,
-                               plots=False, opt=opt)
+                            plots=False, opt=opt)
                 y.append(r + t)  # results and times
             np.savetxt(f, y, fmt='%10.4g')  # save
         os.system('zip -r study.zip study_*.txt')

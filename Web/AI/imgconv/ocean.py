@@ -1,3 +1,5 @@
+<<<<<<< HEAD
+=======
 import cv2
 import os
 from PIL import Image
@@ -112,3 +114,4 @@ if tf == False:
     os.makedirs('AI/cartoongan/test_img')
 
 cv2.imwrite('AI/cartoongan/test_img/result_ocean.png', background) 
+>>>>>>> f8f6950edac4d633672d441ac8390ae04e8d7bc9
