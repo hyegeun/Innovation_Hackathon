@@ -37,8 +37,13 @@ for i in range(filenum):
         faceinfo[i][j] = float(faceinfo[i][j])
 
 #사진 합성의 첫 시작 좌표
+
+
 height = 0
 width = backw
+
+#임시 width 좌표들
+tempw = []
 
 #사람 사진 하나씩 합성 
 for i, name in enumerate(fpath):
@@ -49,16 +54,14 @@ for i, name in enumerate(fpath):
     ratio = prosize[i] / faceheight      #넣어야할 size와의 비율
     personheight = int(ratio * h)         #사람사진 height 변경
     personwidth = int(ratio * w)          #사람사진 width 변경
-    #사람사진 크기 조절
-    person = cv2.resize(person, (personwidth, personheight), interpolation = cv2.INTER_LINEAR)
-    
+ 
     #첫 합성이면 맨 오른쪽에 붙여서 넣어줌 
     if i==0:
         width = width - personwidth
         prewidth = personwidth
     else:
-        posw = int(prewidth * faceinfo[i-1][0] - (prewidth * faceinfo[i-1][2]/2))   #지금 사람 이전 사람사진의 face left 좌표
-        statew = int(personwidth - (personwidth * faceinfo[i][0] + (personwidth * faceinfo[i][2]/2)) ) #지금 사람의 face right 너비
+        posw = int(prewidth * faceinfo[i-1][0] - (prewidth * faceinfo[i-1][2]/2))   #지금 사람 이전 사람사진의 face left 크기
+        statew = int(personwidth - (personwidth * faceinfo[i][0] + (personwidth * faceinfo[i][2]/2)) ) #지금 사람의 face right 너비 크기
         wleft = width - personwidth
         #width가 음수가 되어서는 안됨. 에러남 
         if wleft < 0:
@@ -66,20 +69,40 @@ for i, name in enumerate(fpath):
         wright = width - personwidth + posw + statew       
         width = random.randrange(wleft, wright)   #범위는 width - w 부터 width - w + posw + statew 까지
         prewidth = personwidth
+    print(width)
+    #임시 width 리스트에 추가
+    tempw.append([personheight, personwidth, width])
 
-    #바다 사진에서의 기본 높이 조절
-    height = backh - personheight
-    roi = background[height:height+personheight, width:width+personwidth]       #배경이미지의 변경할(사람사진을 넣을) 영역
-    mask = cv2.cvtColor(person, cv2.COLOR_BGR2GRAY)
-                                 #사람사진 흑백처리
+if width < 2:
+    dx = 0
+else:
+    dx = int(width/2)
+
+for i, name in enumerate(fpath):
+    imgpath = ('%s/%s' %(fdir, name))
+    person = cv2.imread(imgpath, 1)       #사람 사진 불러옴
+
+    h = tempw[i][0]
+    w = tempw[i][1]
+    #사람사진 크기 조절해서 저장
+    person = cv2.resize(person, (w, h), interpolation = cv2.INTER_LINEAR)
+
+    height = backh - h          #사람사진 높이
+    tempw[i][2] = tempw[i][2] - dx
+    width = tempw[i][2]
+    print(width)
+
+    roi = background[height:height+h, width:width+w]       #배경이미지의 변경할(사람사진을 넣을) 영역
+    mask = cv2.cvtColor(person, cv2.COLOR_BGR2GRAY)              #사람사진 흑백처리
+
     #이미지 이진화 => 배경은 검정. 사람은 흰색
     mask[mask[:]==255]=0
     mask[mask[:]>0]=255
-    mask_inv = cv2.bitwise_not(mask)                                            #mask반전.  => 배경은 흰색. 글자는 검정
-    daum = cv2.bitwise_and(person, person, mask=mask)                           #마스크와 사람사진 칼라이미지 and하면 사람만 추출됨
-    back = cv2.bitwise_and(roi, roi, mask=mask_inv)                             #roi와 mask_inv와 and하면 roi에 사람만 검정색으로 됨
-    dst = cv2.add(daum, back)                                                   #사람사진과 사람모양이 뚤린 배경을 합침
-    background[height:height+personheight, width:width+personwidth] = dst       #roi를 제자리에 넣음
+    mask_inv = cv2.bitwise_not(mask)                             #mask반전.  => 배경은 흰색. 글자는 검정
+    daum = cv2.bitwise_and(person, person, mask=mask)            #마스크와 사람사진 칼라이미지 and하면 사람만 추출됨
+    back = cv2.bitwise_and(roi, roi, mask=mask_inv)              #roi와 mask_inv와 and하면 roi에 사람만 검정색으로 됨
+    dst = cv2.add(daum, back)                                    #사람사진과 사람모양이 뚤린 배경을 합침
+    background[height:height+h, width:width+w] = dst       #roi를 제자리에 넣음
     os.remove('%s/%s' %(fdir, name))
     os.remove("%s/%s.txt" %(facedir, name[:-4]))
 
