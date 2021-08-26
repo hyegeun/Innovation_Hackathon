@@ -2,21 +2,26 @@ import cv2
 import os
 from PIL import Image
 import random
+
 #배경사진
 background = cv2.imread('flaskapp/static/images/back_img/ocean.jpg', 1)
 backh = background.shape[0]  #배경사진 height
 backw = background.shape[1]  #배경사진 width
+
 #배경에 들어가는 사람들 face 크기(face height)
 facesize = [100, 110, 120, 130]
+
 #사람 사진이 있는 파일 접근
 fdir = 'AI/imgconv/process'
 fpath = os.listdir(fdir)
 filenum = len(fpath)       #사람 수 -1
 prosize = facesize[-filenum:]
+
 #사람 face 정보
 facedir = 'AI/yolov5/result/exp2'
 facepath = os.listdir(facedir)
 faceinfo = []
+
 #사람들 face 위치 정보를 faceinfo에 리스트로 저장(x, y, w, h)
 for tfile in facepath:
     f = open("%s//%s.txt" %(facedir, tfile[:-4]), 'r')
@@ -24,14 +29,17 @@ for tfile in facepath:
     face_position = fread.split(" ")
     face_position = face_position[-4:]
     faceinfo.append(face_position)
-    os.remove()
+    f.close()
+
 #받은 faceinfo를 float형으로 다시 변환시켜줌 
-for i in range(4):
+for i in range(filenum):
     for j in range(4):
         faceinfo[i][j] = float(faceinfo[i][j])
+
 #사진 합성의 첫 시작 좌표
 height = 0
 width = backw
+
 #사람 사진 하나씩 합성 
 for i, name in enumerate(fpath):
     imgpath = ('%s/%s' %(fdir, name))
@@ -49,18 +57,21 @@ for i, name in enumerate(fpath):
         width = width - personwidth
         prewidth = personwidth
     else:
-        posw = int(prewidth * faceinfo[i-1][0])   #지금 사람 이전 사람사진의 face left 좌표
+        posw = int(prewidth * faceinfo[i-1][0] - (prewidth * faceinfo[i-1][2]/2))   #지금 사람 이전 사람사진의 face left 좌표
+        statew = int(personwidth - (personwidth * faceinfo[i][0] + (personwidth * faceinfo[i][2]/2)) ) #지금 사람의 face right 너비
         wleft = width - personwidth
         #width가 음수가 되어서는 안됨. 에러남 
         if wleft < 0:
             wleft = 0
-        wright = width - personwidth + posw       
-        width = random.randrange(wleft, wright)   #범위는 width - w 부터 width - w + posw 까지
+        wright = width - personwidth + posw + statew       
+        width = random.randrange(wleft, wright)   #범위는 width - w 부터 width - w + posw + statew 까지
         prewidth = personwidth
+
     #바다 사진에서의 기본 높이 조절
     height = backh - personheight
     roi = background[height:height+personheight, width:width+personwidth]       #배경이미지의 변경할(사람사진을 넣을) 영역
-    mask = cv2.cvtColor(person, cv2.COLOR_BGR2GRAY)                             #사람사진 흑백처리
+    mask = cv2.cvtColor(person, cv2.COLOR_BGR2GRAY)
+                                 #사람사진 흑백처리
     #이미지 이진화 => 배경은 검정. 사람은 흰색
     mask[mask[:]==255]=0
     mask[mask[:]>0]=255
@@ -69,7 +80,12 @@ for i, name in enumerate(fpath):
     back = cv2.bitwise_and(roi, roi, mask=mask_inv)                             #roi와 mask_inv와 and하면 roi에 사람만 검정색으로 됨
     dst = cv2.add(daum, back)                                                   #사람사진과 사람모양이 뚤린 배경을 합침
     background[height:height+personheight, width:width+personwidth] = dst       #roi를 제자리에 넣음
-    os.remove(imgpath)
+    os.remove('%s/%s' %(fdir, name))
+    os.remove("%s/%s.txt" %(facedir, name[:-4]))
+
+# face label 삭제
+os.rmdir('AI/yolov5/result/exp2')
+
 #이미지 저장
 tf = os.path.isdir('AI/cartoongan/test_img')
 if tf == False:

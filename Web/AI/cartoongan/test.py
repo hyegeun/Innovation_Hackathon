@@ -28,7 +28,6 @@ else:
     print('CPU mode')
     model.float()
 for files in os.listdir(opt.input_dir):
-<<<<<<< HEAD
 	ext = os.path.splitext(files)[1]
 	if ext not in valid_ext:
 		continue
