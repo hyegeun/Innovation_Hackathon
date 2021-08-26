@@ -17,7 +17,7 @@ for name in fname:
         'https://api.remove.bg/v1.0/removebg',
         files={'image_file': open('AI/yolov5/result/exp/%s' %name, 'rb')},
         data={'size': 'auto'},
-        headers={'X-Api-Key': 'oegCfw5yNAt3P2K4PGGSRwMT'},
+        headers={'X-Api-Key': 'YNfL8ZQsxdrZkcrPJXNCZpps'},
     )
     if response.status_code == requests.codes.ok:
         tf = os.path.isdir('AI/imgconv/process')
