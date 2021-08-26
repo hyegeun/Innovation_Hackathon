@@ -4,18 +4,18 @@ from PIL import Image
 import random
 
 #배경사진
-background = cv2.imread('flaskapp/static/images/back_img/ocean.jpg', 1)
+background = cv2.imread('flaskapp/static/images/back_img/winebar.jpg', 1)
 backh = background.shape[0]  #배경사진 height
 backw = background.shape[1]  #배경사진 width
 
 #배경에 들어가는 사람들 face 크기(face height)
-facesize = [100, 110, 120, 130]
+facesize = 170
 
 #사람 사진이 있는 파일 접근
 fdir = 'AI/imgconv/process'
 fpath = os.listdir(fdir)
 filenum = len(fpath)       #사람 수 -1
-prosize = facesize[-filenum:]
+prosize = facesize
 
 #사람 face 정보
 facedir = 'AI/yolov5/result/exp2'
@@ -37,8 +37,6 @@ for i in range(filenum):
         faceinfo[i][j] = float(faceinfo[i][j])
 
 #사진 합성의 첫 시작 좌표
-
-height = 0
 width = backw
 
 #임시 width 좌표들
@@ -50,7 +48,7 @@ for i, name in enumerate(fpath):
     person = cv2.imread(imgpath, 1)       #사람 사진 불러옴
     h, w, c = person.shape                #사람 사진 height, width
     faceheight = int(faceinfo[i][3] * h)  #face height 구함 
-    ratio = prosize[i] / faceheight      #넣어야할 size와의 비율
+    ratio = prosize / faceheight          #넣어야할 size와의 비율
     personheight = int(ratio * h)         #사람사진 height 변경
     personwidth = int(ratio * w)          #사람사진 width 변경
  
@@ -59,22 +57,18 @@ for i, name in enumerate(fpath):
         width = width - personwidth
         prewidth = personwidth
     else:
-        posw = int(prewidth * faceinfo[i-1][0] - (prewidth * faceinfo[i-1][2]/2))   #지금 사람 이전 사람사진의 face left 크기
-        statew = int(personwidth - (personwidth * faceinfo[i][0] + (personwidth * faceinfo[i][2]/2)) - 10) #지금 사람의 face right 너비 크기
-        wleft = width - personwidth
-        #width가 음수가 되어서는 안됨. 에러남 
-        if wleft < 0:
-            wleft = 0
-        wright = width - personwidth + posw + statew       
-        width = random.randrange(wleft, wright)   #범위는 width - w 부터 width - w + posw + statew 까지
+        width = width - personwidth
+        #width가 130보다 작아지면 안됨
+        if width < 130:
+            width = 130
         prewidth = personwidth
     #임시 width 리스트에 추가
     tempw.append([personheight, personwidth, width])
 
-if width < 2:
+if width < 132:
     dx = 0
 else:
-    dx = int(width/2)
+    dx = int((width-130)/2)
 
 for i, name in enumerate(fpath):
     imgpath = ('%s/%s' %(fdir, name))
@@ -85,7 +79,7 @@ for i, name in enumerate(fpath):
     #사람사진 크기 조절해서 저장
     person = cv2.resize(person, (w, h), interpolation = cv2.INTER_LINEAR)
 
-    height = backh - h          #사람사진 높이
+    height = backh - h - 303         #사람사진 높이
     tempw[i][2] = tempw[i][2] - dx
     width = tempw[i][2]
 
@@ -111,4 +105,4 @@ tf = os.path.isdir('AI/cartoongan/test_img')
 if tf == False:
     os.makedirs('AI/cartoongan/test_img')
 
-cv2.imwrite('AI/cartoongan/test_img/result_ocean.png', background) 
+cv2.imwrite('AI/cartoongan/test_img/result_winebar.png', background) 
