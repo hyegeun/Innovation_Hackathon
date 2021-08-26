@@ -31,7 +31,7 @@ def project05_04():
         cmd3=("python ./AI/cartoongan/test.py --style Hayao")
     os.system(cmd3)
     return render_template("project05_04.html")
-    
+
 @app.route('/project05_03', methods=['GET', 'POST'])
 def project05_03():
 
@@ -95,9 +95,6 @@ def project05_02():
         elif kind1=='Hayao':
             cmd4=("python ./AI/cartoongan/test.py --style Hayao")
         os.system(cmd4)
-        
-        
-    
     return render_template("project05_02.html")
 
 @app.route('/project05_01', methods=['GET', 'POST'])
