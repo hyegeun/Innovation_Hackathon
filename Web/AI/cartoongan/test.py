@@ -69,7 +69,7 @@ for files in os.listdir(opt.input_dir):
 	# deprocess, (0, 1)
 	output_image = output_image.data.cpu().float() * 0.5 + 0.5
 	# save
-	if !os.path.isdir('flaskapp/static/images/output_img'):
+	if !(os.path.isdir('flaskapp/static/images/output_img')):
 		os.mkdir('flaskapp/static/images/output_img')
 	vutils.save_image(output_image, 'flaskapp/static/images/output_img/output_result.png')
 	# remove

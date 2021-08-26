@@ -86,6 +86,6 @@ for i, name in enumerate(fpath):
     os.remove(imgpath)
 
 #이미지 저장
-if !os.path.isdir('AI/cartoongan/test_img'):
+if !(os.path.isdir('AI/cartoongan/test_img')):
     os.mkdir('AI/cartoongan/test_img')
 cv2.imwrite('AI/cartoongan/test_img/result_ocean.png', background) 
