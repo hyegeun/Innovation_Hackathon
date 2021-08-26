@@ -21,7 +21,7 @@ for name in fname:
     )
     if response.status_code == requests.codes.ok:
         if !(os.path.isdir('AI/imgconv/process')):
-            os.mkdir('AI/imgconv/process')
+            os.makedirs('AI/imgconv/process')
         with open('AI/imgconv/process/%s.png' %name[:-4], 'wb') as out:
             out.write(response.content)
     else:
