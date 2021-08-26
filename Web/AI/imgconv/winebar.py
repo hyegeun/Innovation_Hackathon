@@ -9,7 +9,7 @@ backh = background.shape[0]  #배경사진 height
 backw = background.shape[1]  #배경사진 width
 
 #배경에 들어가는 사람들 face 크기(face height)
-facesize = 170
+facesize = 160
 
 #사람 사진이 있는 파일 접근
 fdir = 'AI/imgconv/process'
