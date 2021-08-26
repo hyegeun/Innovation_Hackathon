@@ -1,85 +1,31 @@
-import torch
-import os
-import numpy as np
-import argparse
+# Requires "requests" to be installed (see python-requests.org)
+import requests
 from PIL import Image
-import torchvision.transforms as transforms
-from torch.autograd import Variable
-import torchvision.utils as vutils
-from network.Transformer import Transformer
+import os
 
-parser = argparse.ArgumentParser()
-parser.add_argument('--input_dir', default = 'AI/cartoongan/test_img')
-parser.add_argument('--load_size', default = 800)
-parser.add_argument('--model_path', default = 'AI/cartoongan/pretrained_model/')
-parser.add_argument('--style', default = 'Hayao')
-parser.add_argument('--output_dir', default = 'flaskapp/static/images/output_img')
-parser.add_argument('--gpu', type=int, default = 0)
+filepath = 'AI/yolov5/result/exp'
+fname = os.listdir(filepath)
 
-opt = parser.parse_args()
+for name in fname:
+    imgfile = Image.open('AI/yolov5/result/exp/%s' %name)
+    imgw, imgh = imgfile.size
+    imgfile = imgfile.crop((0, 0, imgw, imgh-20))
+    imgfile.save('AI/yolov5/result/exp/%s' %name)
 
-valid_ext = ['.jpg', '.png']
+for name in fname:
+    response = requests.post(
+        'https://api.remove.bg/v1.0/removebg',
+        files={'image_file': open('AI/yolov5/result/exp/%s' %name, 'rb')},
+        data={'size': 'auto'},
+        headers={'X-Api-Key': 'r92DV74VDGEJm2sVxPBs5dbB'},
+    )
+    if response.status_code == requests.codes.ok:
+        if !(os.path.isdir('AI/imgconv/process')):
+            os.makedirs('AI/imgconv/process')
+        with open('AI/imgconv/process/%s.png' %name[:-4], 'wb') as out:
+            out.write(response.content)
+    else:
+        print("Error:", response.status_code, response.text)
+    os.remove('AI/yolov5/result/exp/%s' %name)
 
-if not os.path.exists(opt.output_dir): os.mkdir(opt.output_dir)
-
-# load pretrained model
-model = Transformer()
-model.load_state_dict(torch.load(os.path.join(opt.model_path + opt.style + '_net_G_float.pth')))
-model.eval()
-
-if opt.gpu > -1:
-	print('GPU mode')
-	model.cuda()
-else:
-	print('CPU mode')
-	model.float()
-
-for files in os.listdir(opt.input_dir):
-	ext = os.path.splitext(files)[1]
-	if ext not in valid_ext:
-		continue
-	# load image
-	input_image = Image.open(os.path.join(opt.input_dir, files)).convert("RGB")
-	# resize image, keep aspect ratio
-	h = input_image.size[0]
-	w = input_image.size[1]
-	ratio = h *1.0 / w
-	if ratio > 1:
-		h = opt.load_size
-		w = int(h*1.0/ratio)
-	else:
-		w = opt.load_size
-		h = int(w * ratio)
-	input_image = input_image.resize((h, w), Image.BICUBIC)
-	input_image = np.asarray(input_image)
-	# RGB -> BGR
-	input_image = input_image[:, :, [2, 1, 0]]
-	input_image = transforms.ToTensor()(input_image).unsqueeze(0)
-	# preprocess, (-1, 1)
-	input_image = -1 + 2 * input_image 
-	if opt.gpu > -1:
-		input_image = Variable(input_image, volatile=True).cuda()
-	else:
-		input_image = Variable(input_image, volatile=True).float()
-	# forward
-	output_image = model(input_image)
-	output_image = output_image[0]
-	# BGR -> RGB
-	output_image = output_image[[2, 1, 0], :, :]
-	# deprocess, (0, 1)
-	output_image = output_image.data.cpu().float() * 0.5 + 0.5
-	# save
-	if !(os.path.isdir('flaskapp/static/images/output_img')):
-		os.mkdir('flaskapp/static/images/output_img')
-	vutils.save_image(output_image, 'flaskapp/static/images/output_img/output_result.png')
-	# remove
-	os.remove(os.path.join(opt.input_dir, files))
-
-removepath = 'flaskapp/static/images/input_img'
-removelist = os.listdir(removepath)
-
-#input했던 이미지 삭제
-for img in removelist:
-	os.remove('flaskapp/static/images/input_img/%s' %img)
-
-print('Done!')
+os.rmdir('AI/yolov5/result/exp')
