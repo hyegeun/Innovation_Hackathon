@@ -17,10 +17,11 @@ for name in fname:
         'https://api.remove.bg/v1.0/removebg',
         files={'image_file': open('AI/yolov5/result/exp/%s' %name, 'rb')},
         data={'size': 'auto'},
-        headers={'X-Api-Key': 'r92DV74VDGEJm2sVxPBs5dbB'},
+        headers={'X-Api-Key': 'x57bwtfa5Bfhptq5U3FyMjUr'},
     )
     if response.status_code == requests.codes.ok:
-        if !(os.path.isdir('AI/imgconv/process')):
+
+        if os.path.isdir('AI/imgconv/process') == False:
             os.mkdir('AI/imgconv/process')
         with open('AI/imgconv/process/%s.png' %name[:-4], 'wb') as out:
             out.write(response.content)
